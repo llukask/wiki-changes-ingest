@@ -1,0 +1,16 @@
+{
+  "name": "wiki-changes",
+  "version": "0.0.1",
+  "description": "Analyzes the wikipedia recent changes stream",
+  "main": "src/main.js",
+  "repository": "qwertzdarth/wiki-changes",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lukas Kilian",
+  "license": "MIT",
+  "dependencies": {
+    "eventsource": "^1.0.0"
+  }
+}
