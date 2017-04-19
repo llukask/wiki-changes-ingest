@@ -6,11 +6,13 @@
   "repository": "qwertzdarth/wiki-changes",
   "private": true,
   "scripts": {
+    "start": "node src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lukas Kilian",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/pubsub": "^0.10.0",
     "eventsource": "^1.0.0"
   }
 }
