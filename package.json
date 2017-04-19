@@ -6,6 +6,7 @@
   "repository": "qwertzdarth/wiki-changes",
   "private": true,
   "scripts": {
+    "docker": "docker build -t wiki-changes .",
     "start": "node src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
