@@ -1,18 +1,38 @@
+const PROJECT_ID = "tweeting-164909";
+const TOPIC_NAME = 'wiki-changes-2';
+const EVENT_STREAM_URI = "https://stream.wikimedia.org/v2/stream/recentchange";
+
 const EventSource = require("eventsource");
 const PubSub = require('@google-cloud/pubsub');
+const winston = require('winston');
 
-const projectId = "tweeting-164909";
-
-const pubsubClient = PubSub({
-  projectId: projectId
+const logger = new winston.Logger({
+  transports: [
+    new (winston.transports.Console)({
+      timestamp: function() {
+        return Date.now();
+      },
+      formatter: function(options) {
+        // Return string will be passed to logger.
+        return (new Date(options.timestamp()).toISOString()) +' '+ options.level.toUpperCase() +' '+ (options.message ? options.message : '') +
+          (options.meta && Object.keys(options.meta).length ? '\n\t'+ JSON.stringify(options.meta) : '' );
+      }
+    })
+  ]
 });
 
-const topicName = 'wiki-changes';
 
-const topic = pubsubClient.topic(topicName);
-console.log(topic);
-let changeStream = new EventSource(
-  "https://stream.wikimedia.org/v2/stream/recentchange");
+
+const pubsubClient = PubSub({
+  projectId: PROJECT_ID
+});
+
+
+const topic = pubsubClient.topic(TOPIC_NAME);
+logger.info("Connected to topic " + TOPIC_NAME);
+
+let changeStream = new EventSource(EVENT_STREAM_URI);
+logger.info("Connected to EventStream " + EVENT_STREAM_URI);
 let cnt = 0;
 changeStream.onmessage = msg => {
   // console.log(typeof msg.data);
@@ -42,13 +62,13 @@ changeStream.onmessage = msg => {
     topic.publish(formatted, (err, msgIds, apiResponse) => {
       cnt++;
       if(err) {
-        console.error(err);
+        logger.error(err);
       }
     });
   }
 };
 
 setInterval(() => {
-  console.log("Got " + cnt + " in the last 10s!");
+  logger.info("Got " + cnt + " events in the last 10s!");
   cnt = 0;
 }, 10000);

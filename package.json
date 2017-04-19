@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@google-cloud/pubsub": "^0.10.0",
-    "eventsource": "^1.0.0"
+    "eventsource": "^1.0.0",
+    "winston": "^2.3.1"
   }
 }
