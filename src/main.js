@@ -35,12 +35,18 @@ logger.info("Connected to topic " + TOPIC_NAME);
 
 let changeStream = new EventSource(EVENT_STREAM_URI);
 logger.info("Connected to EventStream " + EVENT_STREAM_URI);
+
+let ids = [];
+
 let cnt = 0;
 changeStream.onmessage = msg => {
   // console.log(typeof msg.data);
   let data = JSON.parse(msg.data);
   if(data.type === 'edit') {
     //console.log(JSON.stringify(data));
+    if(ids.includes(data.id)) {
+      winston.info("Got duplicate " + data.id);
+    }
     let formatted = {
       bot: data.bot,
       comment: data.comment,
@@ -61,6 +67,7 @@ changeStream.onmessage = msg => {
       user: data.user,
       wiki: data.wiki
     };
+    ids.push(formatted.id);
     topic.publish(formatted, (err, msgIds, apiResponse) => {
       cnt++;
       if(err) {
