@@ -1,0 +1,5 @@
+{
+    "projectId": "tweeting-164909",
+    "topicName": "wiki-changes-2",
+    "eventStreamUri": "https://stream.wikimedia.org/v2/stream/recentchange"
+}

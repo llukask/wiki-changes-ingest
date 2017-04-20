@@ -1,0 +1,5 @@
+{
+    "projectId": "PROJECT_ID",
+    "topicName": "TOPIC_NAME",
+    "eventStreamUri": "EVENT_STREAM_URI"
+}

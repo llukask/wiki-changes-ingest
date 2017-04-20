@@ -1,6 +1,8 @@
-const PROJECT_ID = "tweeting-164909";
-const TOPIC_NAME = 'wiki-changes-2';
-const EVENT_STREAM_URI = "https://stream.wikimedia.org/v2/stream/recentchange";
+const config = require('config');
+
+const PROJECT_ID = config.get("projectId");
+const TOPIC_NAME = config.get("topicName");
+const EVENT_STREAM_URI = config.get("eventStreamUri");
 
 const EventSource = require("eventsource");
 const PubSub = require('@google-cloud/pubsub');
